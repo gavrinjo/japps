@@ -1,4 +1,4 @@
-# code-perks
+# japps
 
 Initial release
 
