@@ -1,6 +1,5 @@
 # code-perks
-Just another repo. for learning programing languages.
 
-adding few lines just for testing purposes.
+Initial release
 
-new line...
+An experimental web application for job application search
