@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup as bs
 from requests import get
 import re
 
-#keyword = input("Input search keyword ->->->->->")
+# keyword = input("Input search keyword ->->->->->")
 base_url = f"https://www.moj-posao.net/Pretraga-Poslova/?keyword=projektant&area=2&category="
 
 print("\nsearch results\n")
@@ -39,14 +39,14 @@ for url in url_list:
                 company_lst.append(company.parent.parent.parent.a.img.get("title"))
             except AttributeError:
                 company_lst.append(company.parent.parent.parent.img.get("title"))
-            deadline_lst.append(company.find_next_sibling(class_ = "deadline").text.strip())
+            deadline_lst.append(company.find_next_sibling(class_="deadline").text.strip())
             href_lst.append(company.parent.get("href"))
         else:
             company_lst.append(company.find_next_sibling("p").text.strip())
-            deadline_lst.append(company.find_next_sibling(class_ = "deadline").time.text.strip())
+            deadline_lst.append(company.find_next_sibling(class_="deadline").time.text.strip())
             href_lst.append(company.a.get("href"))
         position_lst.append(company.text.strip())
-        location_lst.append(company.find_next_sibling(class_ = "job-location").text.strip())
+        location_lst.append(company.find_next_sibling(class_="job-location").text.strip())
 
 
 # zip dictionary keys wit corresponding values 
@@ -55,6 +55,6 @@ for a, b, c, d, e in zip(company_lst, position_lst, location_lst, deadline_lst, 
 
 # print out
 for i in stack:
-	print("\n")
-	for o, h in i.items():
-		print(o + ":", h)
+    print("\n")
+    for o, h in i.items():
+        print(o + ":", h)
