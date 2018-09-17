@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Position</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+{% for post in posts %}
+                <tr>
+                    <td><a href="{{ post.href }}">{{ post.position }}></a></td>
+                    <td>{{ post.company }}</td>
+                    <td>{{ post.location }}</td>
+                    <td>{{ post.deadline }}</td>
+                </tr>
+{% endfor %}
+            </tbody>
+        </table>
+{% endblock content %}
