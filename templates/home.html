@@ -1,10 +1,23 @@
 {% extends "layout.html" %}
 {% block content %}
-    {% for post in posts %}
-    <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-    <strong class="d-block text-gray-dark">{{ post.title }}</strong>
-    By {{ post.author }} on {{ post.date_posted }}
-    {{ post.content }}
-    </p>
-    {% endfor %}
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Position</th>
+                    <th>Company</th>
+                    <th>Location</th>
+                    <th>Deadline</th>
+                </tr>
+            </thead>
+            <tbody>
+{% for post in posts %}
+                <tr>
+                    <td><a href="{{ post.href }}">{{ post.position }}></a></td>
+                    <td>{{ post.company }}</td>
+                    <td>{{ post.location }}</td>
+                    <td>{{ post.deadline }}</td>
+                </tr>
+{% endfor %}
+            </tbody>
+        </table>
 {% endblock content %}
