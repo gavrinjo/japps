@@ -53,12 +53,11 @@ def get_data():
                 pdate = datetime.strptime(item.pubdate.text, "%a, %d %b %Y %H:%M:%S %z").strftime("%d.%m.%Y")
                 src = "MojPosao"
             try:
-                ddate = \
-                re.search(r"(0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d", item.description.text)[0]
+                ddate = re.search(r"(?<=ve: |vu: )(.*)(?=<b|, Mj)", item.description.text)[0]
             except TypeError:
                 ddate = None
             try:
-                local = re.search(r"(?<=Mjesto rada: )(.*)(?=, Op|<)", item.description.text)[0]
+                local = re.search(r"(?<=rada: )(.*)(?=, Op|<)", item.description.text)[0]
             except TypeError:
                 local = None
             link = item.guid.text
@@ -69,6 +68,11 @@ def get_data():
 
 
 # urls = ["https://burzarada.hzz.hr/rss/rsszup", "https://feeds2.feedburner.com/mojposao"]
+# regex for date (0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d
 data = []
 get_data()
 print(url_list())
+# for i in get_data():
+#     for x in i:
+#         print(f"{x} {i[x]}")
+#     print()
