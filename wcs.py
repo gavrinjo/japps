@@ -4,7 +4,7 @@ from requests import get
 from contextlib import closing
 import json
 import re
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 def get_url(src):
@@ -70,9 +70,17 @@ def get_data():
 # urls = ["https://burzarada.hzz.hr/rss/rsszup", "https://feeds2.feedburner.com/mojposao"]
 # regex for date (0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d
 data = []
-get_data()
+# get_data()
 print(url_list())
 # for i in get_data():
 #     for x in i:
 #         print(f"{x} {i[x]}")
 #     print()
+
+# date_1 = datetime.strptime("21.09.2018", "%d.%m.%Y")
+# date_2 = datetime.now()
+# diff = date_2 - date_1
+# end_date = date_1 - timedelta(days=4)
+#
+# print(diff.days < 4)
+# print(end_date.strftime("%d.%m.%Y"))
