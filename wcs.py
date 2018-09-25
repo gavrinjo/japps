@@ -45,42 +45,48 @@ def get_data():
         raw_data = get_url(url)
         soup_data = bs(raw_data, "lxml")
         for item in soup_data.find_all("item"):
-            title = item.title.text
-            if url.find("hzz") > 2:
-                pdate = item.pubdate.text
-                src = "HZZ"
+            if datetime.now() - datetime.strptime(get_pdate(item), "%d.%m.%Y") < timedelta(days=5):
+                title = get_title(item)
+                pdate = get_pdate(item)
+                ddate = get_ddate(item)
+                location = get_location(item)
+                link = get_link(item)
             else:
-                pdate = datetime.strptime(item.pubdate.text, "%a, %d %b %Y %H:%M:%S %z").strftime("%d.%m.%Y")
-                src = "MojPosao"
-            try:
-                ddate = re.search(r"(?<=ve: |vu: )(.*)(?=<b|, Mj)", item.description.text)[0]
-            except TypeError:
-                ddate = None
-            try:
-                local = re.search(r"(?<=rada: )(.*)(?=, Op|<)", item.description.text)[0]
-            except TypeError:
-                local = None
-            link = item.guid.text
-            data.append(dict(Title=title, Date=pdate, Link=link, Deadline=ddate, Location=local, Izvor=src))
+                continue
+            data.append(dict(Title=title, PubDate=pdate, DueDate=ddate, Location=location, Link=link))
         # return data
         with open('poss.json', 'w') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
 
 
-# urls = ["https://burzarada.hzz.hr/rss/rsszup", "https://feeds2.feedburner.com/mojposao"]
-# regex for date (0[1-9]|[12][0-9]|3[01])[- /.](0[1-9]|1[012])[- /.](19|20)\d\d
-data = []
-# get_data()
-print(url_list())
-# for i in get_data():
-#     for x in i:
-#         print(f"{x} {i[x]}")
-#     print()
+def get_title(item):
+    return item.title.text
 
-# date_1 = datetime.strptime("21.09.2018", "%d.%m.%Y")
-# date_2 = datetime.now()
-# diff = date_2 - date_1
-# end_date = date_1 - timedelta(days=4)
-#
-# print(diff.days < 4)
-# print(end_date.strftime("%d.%m.%Y"))
+
+def get_pdate(item):
+    if "burzarada" in item.guid.text:
+        return item.pubdate.text
+    else:
+        return datetime.strptime(item.pubdate.text, "%a, %d %b %Y %H:%M:%S %z").strftime("%d.%m.%Y")
+
+
+def get_ddate(item):
+    try:
+        return re.search(r"(?<=ve: |vu: )(.*)(?=<b|, Mj)", item.description.text)[0]
+    except TypeError:
+        return None
+
+
+def get_location(item):
+    try:
+        return re.search(r"(?<=rada: )(.*)(?=, Op|<)", item.description.text)[0]
+    except TypeError:
+        return None
+
+
+def get_link(item):
+    return item.guid.text
+
+
+data = []
+get_data()
