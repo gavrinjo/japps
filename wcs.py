@@ -21,11 +21,6 @@ def response_check(check):
 
 
 def log_error(error):
-    """
-    It is always a good idea to log errors.
-    This function just prints them, but you can
-    make it do anything.
-    """
     exit(f"ERROR, check your URLs, invalid response code \"{error.status_code}\"")
 
 
